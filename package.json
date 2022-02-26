@@ -1,0 +1,42 @@
+{
+  "name": "paimon",
+  "version": "1.0.0",
+  "description": "Paimon is kinda sussy",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev -r dotenv/config src/index.ts",
+    "start": "node -r dotenv/config dist/index.js",
+    "build": "tsc",
+    "lint": "eslint . --cache --ext .js,.ts",
+    "lint:fix": "elsint . --fix --cache --ext .js,.ts",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paimon-io/discord-bot-paimon.git"
+  },
+  "author": "Sudhanshu <perfectsudh@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paimon-io/discord-bot-paimon/issues"
+  },
+  "homepage": "https://github.com/paimon-io/discord-bot-paimon#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.27.3",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.4.0",
+    "prettier": "^2.5.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  }
+}
