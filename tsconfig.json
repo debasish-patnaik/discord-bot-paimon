@@ -9,5 +9,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
-  }
+  },
+  "include": ["./env.d.ts", "src"],
+  "exclude": ["./node_modules", "./dist"]
 }

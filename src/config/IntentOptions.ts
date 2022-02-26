@@ -1,3 +1,3 @@
-import { IntentsString } from "discord.js";
+import { IntentsString } from "discord.js"
 
 export const IntentOptions: IntentsString[] = ["GUILDS"]
