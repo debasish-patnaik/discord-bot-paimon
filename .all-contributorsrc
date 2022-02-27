@@ -1,0 +1,27 @@
+{
+  "projectName": "discord-bot-paimon",
+  "projectOwner": "paimon-io",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "tsuki42",
+      "name": "Sudhanshu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22864071?v=4",
+      "profile": "https://github.com/tsuki42",
+      "contributions": [
+        "code",
+        "ideas",
+        "infra",
+        "maintenance"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
