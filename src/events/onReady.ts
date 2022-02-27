@@ -8,10 +8,7 @@ export async function onReady(BOT: Client) {
 
   BOT.user?.setPresence({
     activities: [
-      { name: "Dance with SahilRider", type: "STREAMING" },
-      { name: "Character builds with Rakiyun", type: "WATCHING" },
-      { name: "in trials with Prayas", type: "COMPETING" },
-      { name: "Not an emergency food!" }
+      { name: "Not an emergency food!", type: "STREAMING" }
     ],
   })
 
