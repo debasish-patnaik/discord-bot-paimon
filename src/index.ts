@@ -17,7 +17,6 @@ import { onReady } from "./events/onReady"
 
   await BOT.login(process.env.BOT_TOKEN)
 
-
   // define a route for health checking
   const server = fastify({ logger: true })
   server.get("/", async () => {

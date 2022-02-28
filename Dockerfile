@@ -7,10 +7,9 @@ COPY package-lock.json .
 
 RUN npm install
 
-COPY .env.production .env
 COPY . .
 
 RUN npm run build
 RUN npx prisma generate
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:ci"]

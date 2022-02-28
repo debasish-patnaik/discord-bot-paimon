@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --files -r dotenv/config src/index.ts",
     "start": "node -r dotenv/config dist/index.js",
+    "start:ci": "node dist/index.js",
     "build": "tsc",
     "lint": "eslint . --cache --ext .js,.ts",
     "lint:fix": "eslint . --fix --cache --ext .js,.ts",
