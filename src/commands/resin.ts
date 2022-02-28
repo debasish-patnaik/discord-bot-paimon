@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import differenceInMinutes from "date-fns/differenceInMinutes"
+import minutesToHours from "date-fns/minutesToHours"
 import { CommandInteraction } from "discord.js";
 
 import { ICommand } from "../interfaces/command";
@@ -30,25 +31,27 @@ export const resin: ICommand = {
       if (resin) {
         // update the resin count
         // new resin count = old resin count + time * rate
-
-        let newCount = Math.round(resin.resinCount + differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE)
+        let newCount = resin.resinCount + Math.round(differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE)
         if (newCount > 160) {
           newCount = 160
         }
 
         // update the resin count
+        console.info("Updating resin count to", newCount)
         await client.resins.update({
           where: {
             userId: user.id,
           },
           data: {
             resinCount: newCount,
+            updatedAt: new Date(),
           }
         })
 
         let content = `You have ${newCount} resins`
         if (newCount < 160) {
-          content += `\nYour resins will refill in about ${Math.round((160 - newCount) / RESIN_RATE)} minutes`
+          const minutesRemaining = Math.round((160 - newCount) / RESIN_RATE)
+          content += `\nYour resins will refill in about ${minutesToHours(minutesRemaining)} hours and ${minutesRemaining % 60} minutes`
         }
 
         await interaction.editReply({
