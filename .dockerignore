@@ -4,3 +4,4 @@ dist
 .eslintcache
 .git
 .gitignore
+.env

@@ -23,16 +23,20 @@ export const reset: ICommand = {
     const client = getClient()
 
     try {
+      const currentDate = new Date()
       await client.resins.upsert({
         where: {
           userId: user.id,
         },
         update: {
-          resinCount: count
+          resinCount: count,
+          updatedAt: currentDate,
         },
         create: {
           userId: user.id,
           resinCount: count,
+          createdAt: currentDate,
+          updatedAt: currentDate,
         }
       })
 
