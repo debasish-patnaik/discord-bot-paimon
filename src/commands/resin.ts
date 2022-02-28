@@ -31,7 +31,7 @@ export const resin: ICommand = {
         // update the resin count
         // new resin count = old resin count + time * rate
 
-        let newCount = resin.resinCount + differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE
+        let newCount = Math.round(resin.resinCount + differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE)
         if (newCount > 160) {
           newCount = 160
         }
@@ -46,8 +46,13 @@ export const resin: ICommand = {
           }
         })
 
+        let content = `You have ${newCount} resins`
+        if (newCount < 160) {
+          content += `\nYour resins will refill in about ${Math.round((160 - newCount) / RESIN_RATE)} minutes`
+        }
+
         await interaction.editReply({
-          content: `Your current resin count: ${newCount}`,
+          content
         })
       } else {
         await interaction.editReply({
@@ -56,6 +61,7 @@ export const resin: ICommand = {
       }
 
     } catch (err) {
+      console.error(err)
       await interaction.editReply({
         content: `Error fetching resin count`,
       })

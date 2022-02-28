@@ -40,6 +40,7 @@ export const reset: ICommand = {
         content: `Resetting resin count to ${count}`,
       })
     } catch (err) {
+      console.error(err)
       await interaction.editReply({
         content: `Error resetting resin count to ${count}`,
       })
