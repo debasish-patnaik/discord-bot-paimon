@@ -37,8 +37,8 @@ export const resin: ICommand = {
         }
 
         // update the resin count
-        console.info("Updating resin count to", newCount)
-        await client.resins.update({
+        console.info(`Updating resin count to ${newCount} for ${user.username}`)
+        const updatedResin = await client.resins.update({
           where: {
             userId: user.id,
           },
@@ -50,7 +50,8 @@ export const resin: ICommand = {
 
         let content = `You have ${newCount} resins`
         if (newCount < 160) {
-          const minutesRemaining = Math.round((160 - newCount) / RESIN_RATE)
+          const decimalCount = updatedResin.resinCount + differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE
+          const minutesRemaining = Math.round((160 - decimalCount) / RESIN_RATE)
           content += `\nYour resins will refill in about ${minutesToHours(minutesRemaining)} hours and ${minutesRemaining % 60} minutes`
         }
 
