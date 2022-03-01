@@ -29,12 +29,12 @@ export const reset: ICommand = {
           userId: user.id,
         },
         update: {
-          resinCount: count,
+          count: count,
           updatedAt: currentDate,
         },
         create: {
           userId: user.id,
-          resinCount: count,
+          count: count,
           createdAt: currentDate,
           updatedAt: currentDate,
         }

@@ -31,7 +31,7 @@ export const resin: ICommand = {
       if (resin) {
         // update the resin count
         // new resin count = old resin count + time * rate
-        let newCount = resin.resinCount + Math.round(differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE)
+        let newCount = resin.count + Math.round(differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE)
         if (newCount > 160) {
           newCount = 160
         }
@@ -43,16 +43,20 @@ export const resin: ICommand = {
             userId: user.id,
           },
           data: {
-            resinCount: newCount,
+            count: newCount,
             updatedAt: new Date(),
           }
         })
 
         let content = `You have ${newCount} resins`
         if (newCount < 160) {
-          const decimalCount = updatedResin.resinCount + differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE
+          let decimalCount = updatedResin.count + differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE
+          if (decimalCount > 160) {
+            decimalCount = 160
+          }
           const minutesRemaining = Math.round((160 - decimalCount) / RESIN_RATE)
-          content += `\nYour resins will refill in about ${minutesToHours(minutesRemaining)} hours and ${minutesRemaining % 60} minutes`
+          const hours = minutesToHours(minutesRemaining)
+          content += `\nYour resins will refill in about ${hours} hours and ${minutesRemaining - hours * 60} minutes`
         }
 
         await interaction.editReply({

@@ -8,8 +8,10 @@ datasource db {
 }
 
 model Resins {
-  userId     String   @id @db.VarChar(255)
-  resinCount Int
-  createdAt  DateTime @default(now()) @db.Timestamp(6)
-  updatedAt  DateTime @default(now()) @db.Timestamp(6)
+  userId       String    @id @db.VarChar(255)
+  count        Int
+  shouldNotify Boolean   @default(false)
+  notifiedAt   DateTime? @db.Timestamp(6)
+  createdAt    DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime  @default(now()) @db.Timestamp(6)
 }

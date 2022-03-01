@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
 RUN npx prisma generate
+RUN npm run build
 
 CMD ["npm", "run", "start:ci"]
