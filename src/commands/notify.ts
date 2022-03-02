@@ -1,11 +1,13 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import addMinutes from "date-fns/addMinutes";
 import format from "date-fns/format";
-import { CommandInteraction } from "discord.js";
+import subMinutes from "date-fns/subMinutes";
+import { CommandInteraction, TextBasedChannel } from "discord.js";
 import schedule from "node-schedule"
 
 import { ICommand } from "../interfaces/command";
 import { getClient } from "../utils/getClient";
+import { BOT } from "../utils/getDiscordClient";
 
 export const notify: ICommand = {
   data: new SlashCommandBuilder()
@@ -17,7 +19,7 @@ export const notify: ICommand = {
     const DEFAULT_TIME_OFFFSET_MINUTES = 5
 
     await interaction.deferReply()
-    const { user, channel } = interaction
+    const { user } = interaction
 
     const client = getClient()
 
@@ -48,7 +50,7 @@ export const notify: ICommand = {
 
         const approximateFullAt = addMinutes(lastUpdatedAt, minutesRemaining)
 
-        if (approximateFullAt < addMinutes(new Date, DEFAULT_TIME_OFFFSET_MINUTES)) {
+        if (approximateFullAt < subMinutes(new Date, DEFAULT_TIME_OFFFSET_MINUTES)) {
           await interaction.editReply(`Your resin is almost full!`)
           await client.resins.update({
             where: {
@@ -85,6 +87,7 @@ export const notify: ICommand = {
             }
           })
           if (resin && resin.shouldNotify) {
+            const channel = BOT.channels.cache.get(process.env.NOTIFICATION_CHANNEL) as TextBasedChannel
             if (channel) {
               channel.send(`<@${user.id}> Your resin is about to be completely refilled!`)
               console.info(`Notified ${user.username} that resin is about to be refilled`)
@@ -97,8 +100,8 @@ export const notify: ICommand = {
                   notifiedAt: new Date(),
                 }
               })
-
             }
+
           }
         })
 
