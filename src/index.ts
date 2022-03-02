@@ -1,4 +1,5 @@
 import { addMinutes } from "date-fns"
+import format from "date-fns/format"
 import { TextBasedChannel } from "discord.js"
 import fastify from "fastify"
 import schedule from "node-schedule"
@@ -25,10 +26,14 @@ async function initNotifications() {
     const minutesRemaining = Math.round((160 - resin.count) / 0.125)
     const approximateFullAt = addMinutes(lastUpdatedAt, minutesRemaining)
 
+    const user = BOT.users.cache.get(resin.userId)
+
+    console.log(`Scheduling notification for ${user?.username} at ${format(approximateFullAt, "MM/dd/yyyy HH:mm")}`)
+
     schedule.scheduleJob(approximateFullAt, async function () {
       if (resin.shouldNotify) {
         const channel = BOT.channels.cache.get(process.env.NOTIFICATION_CHANNEL) as TextBasedChannel
-        const user = BOT.users.cache.get(resin.userId)
+
         if (channel) {
           channel.send(`<@${resin.userId}> Your resin is about to be completely refilled!`)
           console.info(`Notifying ${user?.username} that resin is about to be refilled`)
