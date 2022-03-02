@@ -1,7 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import addMinutes from "date-fns/addMinutes";
 import format from "date-fns/format";
-import subMinutes from "date-fns/subMinutes";
 import { CommandInteraction, TextBasedChannel } from "discord.js";
 import schedule from "node-schedule"
 
@@ -48,9 +47,9 @@ export const notify: ICommand = {
           return
         }
 
-        const approximateFullAt = addMinutes(lastUpdatedAt, minutesRemaining)
+        const approximateFullAt = addMinutes(lastUpdatedAt, minutesRemaining - DEFAULT_TIME_OFFFSET_MINUTES)
 
-        if (approximateFullAt < subMinutes(new Date, DEFAULT_TIME_OFFFSET_MINUTES)) {
+        if (approximateFullAt < new Date()) {
           await interaction.editReply(`Your resin is almost full!`)
           await client.resins.update({
             where: {

@@ -19,12 +19,13 @@ async function initNotifications() {
       shouldNotify: true,
     }
   })
+  const DEFAULT_TIME_OFFFSET_MINUTES = 5
 
   // loop through the records and schedule a job for each
   resins.forEach(resin => {
     const lastUpdatedAt = resin.updatedAt
     const minutesRemaining = Math.round((160 - resin.count) / 0.125)
-    const approximateFullAt = addMinutes(lastUpdatedAt, minutesRemaining)
+    const approximateFullAt = addMinutes(lastUpdatedAt, minutesRemaining - DEFAULT_TIME_OFFFSET_MINUTES)
 
     const user = BOT.users.cache.get(resin.userId)
 
