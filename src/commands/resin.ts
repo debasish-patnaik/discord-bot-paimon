@@ -50,7 +50,7 @@ export const resin: ICommand = {
 
         let content = `You have ${newCount} resins`
         if (newCount < 160) {
-          let decimalCount = updatedResin.count + differenceInMinutes(new Date(), resin.updatedAt) * RESIN_RATE
+          let decimalCount = updatedResin.count + differenceInMinutes(new Date(), updatedResin.updatedAt) * RESIN_RATE
           if (decimalCount > 160) {
             decimalCount = 160
           }
