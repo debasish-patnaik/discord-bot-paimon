@@ -20,7 +20,6 @@ export const assemble: ICommand = {
     } else {
       message = "Assemble!"
     }
-    message = `${message}\nhttps://tenor.com/boIPu.gif`
 
     await interaction.reply({
       content: message,

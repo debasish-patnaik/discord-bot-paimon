@@ -31,6 +31,8 @@ export const reset: ICommand = {
         update: {
           count: count,
           updatedAt: currentDate,
+          shouldNotify: false,
+          notifiedAt: null,
         },
         create: {
           userId: user.id,

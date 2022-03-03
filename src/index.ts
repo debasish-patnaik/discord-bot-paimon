@@ -32,15 +32,16 @@ async function initNotifications() {
     console.log(`Scheduling notification for ${user?.username} at ${format(approximateFullAt, "MM/dd/yyyy HH:mm")}`)
 
     schedule.scheduleJob(approximateFullAt, async function () {
-      if (resin.shouldNotify) {
+      const updatedResin = await client.resins.findUnique({ where: { userId: resin.userId } })
+      if (updatedResin && updatedResin.shouldNotify) {
         const channel = BOT.channels.cache.get(process.env.NOTIFICATION_CHANNEL) as TextBasedChannel
 
         if (channel) {
-          channel.send(`<@${resin.userId}> Your resin is about to be completely refilled!`)
+          channel.send(`<@${updatedResin.userId}> Your resin is about to be completely refilled!`)
           console.info(`Notifying ${user?.username} that resin is about to be refilled`)
           await client.resins.update({
             where: {
-              userId: resin.userId,
+              userId: updatedResin.userId,
             },
             data: {
               shouldNotify: false,
