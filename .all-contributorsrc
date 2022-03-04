@@ -21,7 +21,17 @@
         "infra",
         "maintenance"
       ]
+    },
+    {
+      "login": "debasish-patnaik",
+      "name": "Debasish Patnaik",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33277793?v=4",
+      "profile": "https://github.com/debasish-patnaik",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
