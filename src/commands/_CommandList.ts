@@ -1,5 +1,6 @@
 import { ICommand } from "../interfaces/command"
 import { domain } from "./domain"
+import { help } from './help'
 import { notify } from "./notify"
 import { ping } from "./ping"
 import { reset } from "./reset"
@@ -13,4 +14,5 @@ export const CommandList: ICommand[] = [
   resin,
   notify,
   domain,
+  help
 ]
