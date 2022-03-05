@@ -27,7 +27,7 @@ export async function initNotifications() {
 
     const user = BOT.users.cache.get(resin.userId)
 
-    console.log(`Scheduling notification for ${user?.username} at ${format(approximateFullAt, "MM/dd/yyyy HH:mm")}`)
+    console.info(`Scheduling notification for ${user?.username} at ${format(approximateFullAt, "MM/dd/yyyy HH:mm")}`)
 
     const currentJob = schedule.scheduleJob(approximateFullAt, async function () {
       const updatedResin = await client.resins.findUnique({ where: { userId: resin.userId } })
@@ -35,8 +35,8 @@ export async function initNotifications() {
         const channel = BOT.channels.cache.get(process.env.NOTIFICATION_CHANNEL) as TextBasedChannel
 
         if (channel) {
-          channel.send(`<@${updatedResin.userId}> Your resin is about to be completely refilled!`)
           console.info(`Notifying ${user?.username} that resin is about to be refilled`)
+          channel.send(`<@${updatedResin.userId}> Your resin is about to be completely refilled!`)
           await client.resins.update({
             where: {
               userId: updatedResin.userId,
@@ -46,6 +46,8 @@ export async function initNotifications() {
               notifiedAt: new Date()
             }
           })
+        } else {
+          console.error(`Could not find notification channel ${process.env.NOTIFICATION_CHANNEL}`)
         }
       }
     })
