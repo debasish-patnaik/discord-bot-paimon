@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders"
 import { CommandInteraction, MessageEmbed } from "discord.js"
 
-import { ICommand } from "../interfaces/command"
+import { ICommand } from "../interfaces"
 
 export const help: ICommand = {
   data: new SlashCommandBuilder()
@@ -27,7 +27,7 @@ export const help: ICommand = {
 
     helpEmbed.addField(
       "Reset your resin count (🌙)",
-      "Back from an adventure? Update your resin count by using `/reset {currentResin}`. to set your current resin count.",
+      "Back from an adventure? Update your resin count by using `/reset {currentResin}` to set your current resin count.",
     )
 
     helpEmbed.addField(

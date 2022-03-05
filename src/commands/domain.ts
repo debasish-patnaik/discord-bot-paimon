@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders"
 import { CommandInteraction } from "discord.js"
 
-import { ICommand } from "../interfaces/command"
+import { ICommand } from "../interfaces"
 
 const DOMAIN_ROTATION_IMG = "https://i.redd.it/2gbkr2y05zh81.png"
 

@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
 
-import { IntentOptions } from "../config/IntentOptions";
+import { IntentOptions } from "../config";
 
-export const BOT = new Client({ intents: IntentOptions }) // 32767 = all intents
+export const BOT = new Client({ intents: IntentOptions }) 

@@ -2,7 +2,7 @@ import { REST } from "@discordjs/rest"
 import { Routes } from "discord-api-types/v9"
 import { Client } from "discord.js"
 
-import { CommandList } from "../commands/_CommandList"
+import { CommandList } from "../commands"
 
 export async function onReady(BOT: Client) {
 

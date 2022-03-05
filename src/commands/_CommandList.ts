@@ -1,4 +1,4 @@
-import { ICommand } from "../interfaces/command"
+import { ICommand } from "../interfaces"
 import { domain } from "./domain"
 import { help } from './help'
 import { notify } from "./notify"

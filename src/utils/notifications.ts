@@ -6,6 +6,8 @@ import schedule from "node-schedule"
 import { getClient } from "./getClient"
 import { BOT } from "./getDiscordClient"
 
+const NOTIFICATION_MAP: Record<string, schedule.Job> = {}
+
 export async function initNotifications() {
   const client = getClient()
 
@@ -27,7 +29,7 @@ export async function initNotifications() {
 
     console.log(`Scheduling notification for ${user?.username} at ${format(approximateFullAt, "MM/dd/yyyy HH:mm")}`)
 
-    schedule.scheduleJob(approximateFullAt, async function () {
+    const currentJob = schedule.scheduleJob(approximateFullAt, async function () {
       const updatedResin = await client.resins.findUnique({ where: { userId: resin.userId } })
       if (updatedResin && updatedResin.shouldNotify) {
         const channel = BOT.channels.cache.get(process.env.NOTIFICATION_CHANNEL) as TextBasedChannel
@@ -48,6 +50,15 @@ export async function initNotifications() {
       }
     })
 
+    // update the entry in the map
+    NOTIFICATION_MAP[resin.userId] = currentJob
   })
+}
 
+export function getScheduledNoficationForUser(userId: string): schedule.Job | undefined {
+  return NOTIFICATION_MAP[userId]
+}
+
+export function setScheduleNotificationForUser(userId: string, job: schedule.Job) {
+  NOTIFICATION_MAP[userId] = job
 }

@@ -3,8 +3,8 @@ import differenceInMinutes from "date-fns/differenceInMinutes"
 import minutesToHours from "date-fns/minutesToHours"
 import { CommandInteraction } from "discord.js";
 
-import { ICommand } from "../interfaces/command";
-import { getClient } from "../utils/getClient";
+import { ICommand } from "../interfaces";
+import { getClient } from "../utils";
 
 
 export const resin: ICommand = {

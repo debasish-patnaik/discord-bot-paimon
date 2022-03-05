@@ -2,7 +2,7 @@ import { onInteraction } from "./events/onInteraction"
 import { onReady } from "./events/onReady"
 import { initRoutes } from "./routes"
 import { BOT } from "./utils/getDiscordClient"
-import { initNotifications } from "./utils/initNotifications"
+import { initNotifications } from "./utils/notifications"
 
 
 (async () => {
