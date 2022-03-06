@@ -1,12 +1,33 @@
 import addMinutes from "date-fns/addMinutes"
 import format from "date-fns/format"
 import { TextBasedChannel } from "discord.js"
-import schedule from "node-schedule"
+import {
+  Job,
+  JobCallback,
+  scheduleJob as nodeScheduleJob,
+} from "node-schedule"
 
 import { getClient } from "./getClient"
 import { BOT } from "./getDiscordClient"
 
-const NOTIFICATION_MAP: Record<string, schedule.Job> = {}
+const NOTIFICATION_MAP: Record<string, Job | undefined> = {}
+
+export function scheduleJob(userId: string, when: Date, job: JobCallback) {
+  const user = BOT.users.cache.get(userId)
+
+  console.info(`Scheduling notification for ${user?.username || userId} at ${format(when, "MM/dd/yyyy HH:mm")}`)
+  const currentJob = nodeScheduleJob(when, job)
+
+  // cancel last scheduled job
+  const lastJob = NOTIFICATION_MAP[userId]
+  if (lastJob) {
+    console.info(`Cancelling previous notification for ${user?.username || userId}`)
+    lastJob.cancel()
+  }
+
+  // update the map
+  NOTIFICATION_MAP[userId] = currentJob
+}
 
 export async function initNotifications() {
   const client = getClient()
@@ -27,9 +48,7 @@ export async function initNotifications() {
 
     const user = BOT.users.cache.get(resin.userId)
 
-    console.info(`Scheduling notification for ${user?.username} at ${format(approximateFullAt, "MM/dd/yyyy HH:mm")}`)
-
-    const currentJob = schedule.scheduleJob(approximateFullAt, async function () {
+    scheduleJob(resin.userId, approximateFullAt, async function () {
       const updatedResin = await client.resins.findUnique({ where: { userId: resin.userId } })
       if (updatedResin && updatedResin.shouldNotify) {
         const channel = BOT.channels.cache.get(process.env.NOTIFICATION_CHANNEL) as TextBasedChannel
@@ -51,16 +70,5 @@ export async function initNotifications() {
         }
       }
     })
-
-    // update the entry in the map
-    NOTIFICATION_MAP[resin.userId] = currentJob
   })
-}
-
-export function getScheduledNoficationForUser(userId: string): schedule.Job | undefined {
-  return NOTIFICATION_MAP[userId]
-}
-
-export function setScheduleNotificationForUser(userId: string, job: schedule.Job) {
-  NOTIFICATION_MAP[userId] = job
-}
+} 
