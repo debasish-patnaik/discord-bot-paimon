@@ -1,15 +1,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import addMinutes from "date-fns/addMinutes";
-import format from "date-fns/format";
 import { CommandInteraction, TextBasedChannel } from "discord.js";
-import schedule from "node-schedule"
 
 import { ICommand } from "../interfaces";
 import {
-  getScheduledNoficationForUser,
-  setScheduleNotificationForUser,
   getClient,
   BOT,
+  scheduleJob,
 } from "../utils";
 
 export const notify: ICommand = {
@@ -80,9 +77,7 @@ export const notify: ICommand = {
 
         await interaction.editReply(`You will be notified when resin is about to be completely refilled.`)
 
-        console.log(`Scheduling notification for ${user.username} at ${format(approximateFullAt, "MM/dd/yyyy HH:mm")}`)
-
-        const currentJob = schedule.scheduleJob(approximateFullAt, async function () {
+        scheduleJob(user.id, approximateFullAt, async function () {
           console.info(`Notifying ${user.username} that resin is about to be refilled`)
           const resin = await client.resins.findUnique({
             where: {
@@ -107,14 +102,6 @@ export const notify: ICommand = {
 
           }
         })
-
-        // cancel last scheduled job
-        const lastJob = getScheduledNoficationForUser(user.id)
-        if (lastJob) {
-          lastJob.cancel()
-        }
-        // update the new scheduled job
-        setScheduleNotificationForUser(user.id, currentJob)
 
       } else {
         await interaction.editReply({
