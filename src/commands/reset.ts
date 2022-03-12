@@ -67,7 +67,7 @@ export const reset: ICommand = {
       })
 
       await interaction.editReply({
-        content: `Resetting resin count to ${count}.\nYou will be notified when resin is about to be completely refilled.`,
+        content: `Resetting resin count to ${count}. ${count < 158 ? `\nYou will be notified when resin is about to be completely refilled.` : ""}`,
       })
     } catch (err) {
       console.error(err)

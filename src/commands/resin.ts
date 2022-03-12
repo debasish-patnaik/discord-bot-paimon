@@ -14,13 +14,12 @@ export const resin: ICommand = {
     .addUserOption((option) =>
       option
         .setName("user")
-        .setDescription("Optional user to show resin count for"),
+        .setDescription("Optional user to show resin count for")
+        .setRequired(false),
     ),
 
   run: async (interaction: CommandInteraction) => {
     await interaction.deferReply()
-
-    const { user: interactionUser } = interaction
 
     let isInteractionUser = false
     let user: User
@@ -28,7 +27,7 @@ export const resin: ICommand = {
     if (commandUser) {
       user = commandUser
     } else {
-      user = interactionUser
+      user = interaction.user
       isInteractionUser = true
     }
 
