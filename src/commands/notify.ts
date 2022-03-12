@@ -7,6 +7,7 @@ import {
   getClient,
   BOT,
   scheduleJob,
+  DEFAULT_TIME_OFFFSET_MINUTES
 } from "../utils";
 
 export const notify: ICommand = {
@@ -15,8 +16,6 @@ export const notify: ICommand = {
     .setDescription("Notify when resin is about to be completely refilled"),
 
   run: async (interaction: CommandInteraction) => {
-
-    const DEFAULT_TIME_OFFFSET_MINUTES = 5
 
     await interaction.deferReply()
     const { user } = interaction

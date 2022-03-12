@@ -7,6 +7,7 @@ import {
   scheduleJob as nodeScheduleJob,
 } from "node-schedule"
 
+import { DEFAULT_TIME_OFFFSET_MINUTES } from "./constants"
 import { getClient } from "./getClient"
 import { BOT } from "./getDiscordClient"
 
@@ -38,7 +39,6 @@ export async function initNotifications() {
       shouldNotify: true,
     }
   })
-  const DEFAULT_TIME_OFFFSET_MINUTES = 5
 
   // loop through the records and schedule a job for each
   resins.forEach(resin => {

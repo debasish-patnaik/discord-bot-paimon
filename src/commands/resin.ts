@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import differenceInMinutes from "date-fns/differenceInMinutes"
 import minutesToHours from "date-fns/minutesToHours"
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, User } from "discord.js";
 
 import { ICommand } from "../interfaces";
 import { getClient } from "../utils";
@@ -10,11 +10,27 @@ import { getClient } from "../utils";
 export const resin: ICommand = {
   data: new SlashCommandBuilder()
     .setName("resin")
-    .setDescription("Shows current resin count"),
+    .setDescription("Shows current resin count")
+    .addUserOption((option) =>
+      option
+        .setName("user")
+        .setDescription("Optional user to show resin count for"),
+    ),
 
   run: async (interaction: CommandInteraction) => {
     await interaction.deferReply()
-    const { user } = interaction
+
+    const { user: interactionUser } = interaction
+
+    let isInteractionUser = false
+    let user: User
+    const commandUser = interaction.options.getUser("user")
+    if (commandUser) {
+      user = commandUser
+    } else {
+      user = interactionUser
+      isInteractionUser = true
+    }
 
     const client = getClient()
 
@@ -48,7 +64,7 @@ export const resin: ICommand = {
           }
         })
 
-        let content = `You have ${newCount} resins`
+        let content = `<@${user.id}> has ${newCount} resins`
         if (newCount < 160) {
           let decimalCount = updatedResin.count + differenceInMinutes(new Date(), updatedResin.updatedAt) * RESIN_RATE
           if (decimalCount > 160) {
@@ -56,15 +72,19 @@ export const resin: ICommand = {
           }
           const minutesRemaining = Math.round((160 - decimalCount) / RESIN_RATE)
           const hours = minutesToHours(minutesRemaining)
-          content += `\nYour resins will refill in about ${hours} hours and ${minutesRemaining - hours * 60} minutes`
+          content += `\n<@${user.id}>'s resins will refill in about ${hours} hours and ${minutesRemaining - hours * 60} minutes`
         }
 
         await interaction.editReply({
           content
         })
       } else {
+        let content = `<@${user.id}> has no resin count. `
+        if (isInteractionUser) {
+          content += `Use the command \`reset\` to update your resin count`
+        }
         await interaction.editReply({
-          content: `You have no resin count. Use the command \`reset\` to update your resin count`,
+          content
         })
       }
 

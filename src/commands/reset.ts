@@ -3,9 +3,7 @@ import addMinutes from "date-fns/addMinutes";
 import { CommandInteraction, TextBasedChannel } from "discord.js";
 
 import { ICommand } from "../interfaces";
-import { BOT, getClient, scheduleJob } from "../utils";
-
-const DEFAULT_TIME_OFFFSET_MINUTES = 5
+import { BOT, getClient, scheduleJob, DEFAULT_TIME_OFFFSET_MINUTES } from "../utils";
 
 export const reset: ICommand = {
   data: new SlashCommandBuilder()
