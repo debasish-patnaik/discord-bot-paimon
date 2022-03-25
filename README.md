@@ -6,7 +6,7 @@
 
 #### Not an emergency food
 
-[Gamers Inc.](https://discord.gg/fEaKQBdfgQ)'s good bot
+[Gamers Inc.](https://discord.gg/79m2GcFMNp)'s good bot
 
 ## Contributors ✨
 
