@@ -10,8 +10,15 @@ datasource db {
 model Resins {
   userId       String    @id @db.VarChar(255)
   count        Int
-  shouldNotify Boolean   @default(false)
-  notifiedAt   DateTime? @db.Timestamp(6)
   createdAt    DateTime  @default(now()) @db.Timestamp(6)
   updatedAt    DateTime  @default(now()) @db.Timestamp(6)
+  notifiedAt   DateTime? @db.Timestamp(6)
+  shouldNotify Boolean   @default(false)
+}
+
+model Entity {
+  name      String   @id @db.VarChar(255)
+  url       String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
 }
